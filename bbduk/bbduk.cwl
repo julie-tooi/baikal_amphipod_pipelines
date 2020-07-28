@@ -69,7 +69,7 @@ outputs:
     outputBinding:
       glob: $(inputs.output_file_name)
 
-  stats_log_file:
+  stats_bbduk_log_file:
     type: File
     outputBinding:
       glob: $(inputs.stats_log_file_name)

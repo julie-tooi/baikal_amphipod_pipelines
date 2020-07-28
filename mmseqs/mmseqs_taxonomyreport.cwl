@@ -8,7 +8,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - $(inputs.mount_point)
+      - $(inputs.mount_directory)
 
 baseCommand: ['mmseqs', 'taxonomyreport']
 
@@ -19,7 +19,7 @@ inputs:
       position: 1
     secondaryFiles: ['.dbtype', '_delnodes.dmp', '_h', '_h.dbtype', '_h.index', '.lookup', '_mapping', '_merged.dmp', '_names.dmp', '_nodes.dmp', '.source', '.index']
 
-  result_DB:
+  tax_reads_database_name:
     type: string
     inputBinding:
       position: 2
@@ -39,7 +39,7 @@ inputs:
     inputBinding:
       prefix: '--threads'
 
-  mount_point:
+  mount_directory:
     type: Directory
 
 outputs:

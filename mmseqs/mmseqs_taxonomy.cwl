@@ -6,29 +6,17 @@ requirements:
   - class: DockerRequirement
     dockerPull: 'soedinglab/mmseqs2:version-11'
   - class: InlineJavascriptRequirement
-#  - class: InitialWorkDirRequirement
-#    listing:
-#      - entry: "$({class: 'Directory', listing: []})"
-#        entryname: $(inputs.result_filtered_db_file_name)
-#        writable: true
-#    listing:
-#      - entry: "$({class: 'Directory', listing: []})"
-#        entryname: $(inputs.result_filtered_db_file_name)
-#        writable: true
-#        entryname:
-#      - class: Directory
-#        basename: $(inputs.result_filtered_db_file_name.split("/")[0])
 
 baseCommand: ['mmseqs', 'taxonomy']
 
 inputs:
-  reads_db:
+  filtered_reads_mmseqsdb:
     type: File
     inputBinding:
       position: 1
     secondaryFiles: ['.dbtype', '_h', '_h.dbtype', '_h.index', '.source', '.index', '.lookup']
 
-  ref_db:
+  ref_database:
     type: File
     inputBinding:
       position: 2
@@ -55,7 +43,7 @@ inputs:
       prefix: '--threads'
 
 outputs:
-  result_DB:
+  tax_reads_database:
     type: File[]
     outputBinding:
       glob: $(inputs.result_filtered_db_file_name + '*')

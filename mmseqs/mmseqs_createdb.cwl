@@ -15,16 +15,16 @@ inputs:
     inputBinding:
       position: 1
 
-  reads_db_name:
+  reads_database_name:
     type: string
     inputBinding:
       position: 2
 
 outputs:
-  filtered_reads_mmseqdb:
+  filtered_reads_mmseqsdb:
     type: File
     outputBinding:
-      glob: $(inputs.reads_db_name)
+      glob: $(inputs.reads_database_name)
     secondaryFiles: ['.dbtype', '_h', '_h.dbtype', '_h.index', '.source', '.index', '.lookup']
 
 
