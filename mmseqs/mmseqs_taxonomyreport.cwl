@@ -8,7 +8,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - $(inputs.mount_directory)
+      - $(inputs.files)
 
 baseCommand: ['mmseqs', 'taxonomyreport']
 
@@ -39,8 +39,8 @@ inputs:
     inputBinding:
       prefix: '--threads'
 
-  mount_directory:
-    type: Directory
+  files:
+    type: File[]
 
 outputs:
   result_report:

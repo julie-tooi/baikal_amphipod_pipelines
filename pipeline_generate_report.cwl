@@ -5,9 +5,8 @@ doc: |
   This pipeline generate two reports: in Kraken and Krona style.
 
 inputs:
-  mount:
-    type: Directory
-    doc: this directory must contain files, that forming tax_reads_database
+  db_files:
+    type: File[]
 
   ref_database:
     type: File
@@ -20,7 +19,6 @@ inputs:
 
   tax_reads_database_name:
     type: string
-    default: 'data_to_report_1/taxonomy_analysis_db'
 
 outputs:
   report_kraken:
@@ -37,7 +35,7 @@ steps:
   generate_kraken_report:
     run: mmseqs/mmseqs_taxonomyreport.cwl
     in:
-      mount_directory: mount
+      files: db_files
       ref_database: ref_database
       tax_reads_database_name: tax_reads_database_name
       result_report_name:
@@ -48,7 +46,7 @@ steps:
   generate_krona_report:
     run: mmseqs/mmseqs_taxonomyreport.cwl
     in:
-      mount_directory: mount
+      files: db_files
       ref_database: ref_database
       tax_reads_database_name: tax_reads_database_name
       result_report_name:
