@@ -1,8 +1,9 @@
 from collections import defaultdict
 from glob import glob
-import re
+# import re
 
 path_to_folders_with_reports = "/home/julie/study_IB/summer_baikal/DATA/*"
+path_to_tsv_file = "/home/julie/study_IB/summer_baikal/total.tsv"
 
 samples = glob(path_to_folders_with_reports)
 
@@ -26,15 +27,15 @@ for sample in samples:
         data_per_sample[sample_name].append(reads_after_filtration)
 
     with open(path_to_kraken_report, "r") as kraken_file_handler:
-        inside_clade = False
+        # inside_clade = False
         for line in kraken_file_handler:
             line = line.strip().split("\t")
-            if line[3] == "clade":
-                inside_clade = bool(re.search("Alveolata", line[5]))
-            has_sufficient_coverage = int(line[1]) > 20
+            # if line[3] == "clade":
+            #     inside_clade = bool(re.search("Alveolata", line[5]))
+            has_sufficient_coverage = int(line[1]) > 50
 
-            if inside_clade and has_sufficient_coverage:
-                useful_data = [line[1], line[3], line[5].strip(), sample_name]
+            if has_sufficient_coverage:
+                useful_data = [line[1], line[3], line[5].lstrip(), sample_name]
 
                 data_per_sample[sample_name].append(useful_data)
 
@@ -43,5 +44,5 @@ for sample in data_per_sample:
     for data in data_per_sample[sample]:
         print("\t".join(data) + "\r")
 
-        with open("/home/julie/study_IB/summer_baikal/total.txt", "a") as report_file_handler:
+        with open(path_to_tsv_file, "a") as report_file_handler:
             report_file_handler.write("\t".join(data) + "\r")
