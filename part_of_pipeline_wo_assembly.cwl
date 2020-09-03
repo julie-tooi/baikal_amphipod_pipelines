@@ -13,7 +13,7 @@ inputs:
     doc: fastq.gz or fastq format
 
   reverse_reads:
-    type: File
+    type: File?
     doc: fastq.gz or fastq format
 
   contaminant_file:

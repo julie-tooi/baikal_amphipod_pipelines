@@ -39,7 +39,7 @@ inputs:
 
   kmer_matching:
     type: int?
-    inpupBinding:
+    inputBinding:
       prefix: '--exact-kmer-matching'
 
   ungapped_score:
