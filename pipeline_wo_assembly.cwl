@@ -11,7 +11,7 @@ inputs:
   forward_reads:
     type: File
   reverse_reads:
-    type: File
+    type: File?
   contaminant_file:
     type: File
   ref_database:

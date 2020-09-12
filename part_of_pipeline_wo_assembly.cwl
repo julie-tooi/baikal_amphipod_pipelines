@@ -13,7 +13,7 @@ inputs:
     doc: fastq.gz or fastq format
 
   reverse_reads:
-    type: File
+    type: File?
     doc: fastq.gz or fastq format
 
   contaminant_file:
@@ -79,5 +79,9 @@ steps:
         default: 'tmp'
       analysis_sensivity:
         default: 7.5
+      kmer_matching:
+        default: 1
+      ungapped_score:
+        default: 30
       threads: threads
     out: [tax_reads_database]

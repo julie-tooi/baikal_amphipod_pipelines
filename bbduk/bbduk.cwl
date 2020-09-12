@@ -18,11 +18,11 @@ inputs:
   forward_reads:
     type: File
     inputBinding:
-      prefix: 'in1='
+      prefix: 'in='
       separate: false
 
   reverse_reads:
-    type: File
+    type: File?
     inputBinding:
       prefix: 'in2='
       separate: false

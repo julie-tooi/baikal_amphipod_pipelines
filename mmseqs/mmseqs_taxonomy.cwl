@@ -33,9 +33,19 @@ inputs:
       position: 4
 
   analysis_sensivity:
-    type: float
+    type: float?
     inputBinding:
       prefix: '-s'
+
+  kmer_matching:
+    type: int?
+    inputBinding:
+      prefix: '--exact-kmer-matching'
+
+  ungapped_score:
+    type: int?
+    inputBinding:
+      prefix: '--min-ungapped-score'
 
   threads:
     type: int
