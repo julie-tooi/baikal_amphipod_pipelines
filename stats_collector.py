@@ -1,50 +1,48 @@
 from collections import defaultdict
 from glob import glob
-# import re
+import os
+import shutil
+import argparse
 
-path_to_folders_with_reports = "/home/julie/study_IB/summer_baikal/DATA/*"
-path_to_tsv_file = "/home/julie/study_IB/summer_baikal/total.tsv"
+parser = argparse.ArgumentParser()
+parser.add_argument('-f', '--folders', type=str, help='Path to folders with reports', required=True)
+parser.add_argument('-o', '--output', type=str, help='Path to reports output', required=True)
+args = parser.parse_args()
 
-samples = glob(path_to_folders_with_reports)
+path_to_folders_with_reports = args.folders
+path_to_batch = args.output
 
-data_per_sample = defaultdict(list)
+# path_to_folders_with_reports = "/home/julie/study_IB/summer_baikal/RESULTS/uniprot_pipeline_reports/reports_uniprot_coi_assembly_1_1_15/*"
+# path_to_batch = "/home/julie/study_IB/summer_baikal/DATA/kraken"
 
-for sample in samples:
-    sample_name = sample.split("/")[-1]
+folders_wit_results = glob(os.path.join(path_to_folders_with_reports, '*'))
 
-    path_to_trim_report = f"{sample}/stats_log_after_contamination_clearing"
-    path_to_kraken_report = f"{sample}/kraken"
+for folder in folders_wit_results:
+    sample_name = folder.split("/")[-1]
+    old_sample_name = os.path.join(folder, 'kraken')
+    new_sample_name = os.path.join(folder, sample_name)
+    if os.path.exists(os.path.join(path_to_batch, sample_name)):
+        print(f'{sample_name} exists')
+        continue
+    else:
+        os.rename(old_sample_name, new_sample_name)
+        shutil.copy2(new_sample_name, path_to_batch)
 
-    # with open(path_to_trim_report, "r") as trim_file_handler:
-    #     trim_file_handler.readline()  # skip header
-    #
-    #     total_reads_processed = trim_file_handler.readline().strip().split("\t")
-    #     matched_reads = trim_file_handler.readline().strip().split("\t")
-    #
-    #     reads_count_after_filtration = int(total_reads_processed[1]) - int(matched_reads[1])
-    #
-    #     reads_after_filtration = [f"{reads_count_after_filtration}", "all_reads", "-", "1", sample_name]
-    #     data_per_sample[sample_name].append(reads_after_filtration)
-
-    with open(path_to_kraken_report, "r") as kraken_file_handler:
-        # inside_clade = False
-        for line in kraken_file_handler:
-            # line = line.strip().split("\t")
-            # if line[3] == "clade":
-            #     inside_clade = bool(re.search("Alveolata", line[5]))
-            has_sufficient_coverage = int(line[1]) > 500
-            # percent_reads = int(line[1])/reads_count_after_filtration
-            if has_sufficient_coverage:
-                # useful_data = [line[1], f"{percent_reads}", line[3], line[5].lstrip(), sample_name]
-                # if "#" in line[5].lstrip():
-                #     print('\t' in line[5].lstrip())
-                #     print(line[5])
-                data_per_sample[sample_name].append(line)
+# reports = glob(os.path.join(path_to_batch, '*.tsv'))
+#
+#
+#
+# for report in reports:
+#     colnames_check = []
+#     header = None
+#     with open(report, 'r') as in_f:
+#         col_names = in_f.readline().strip().split('\t')
+#         for name in col_names:
+#             colname = name.strip('."').split('.clade')[0]
+#             colnames_check.append(colname)
+#             header = "\t".join(colnames_check)
+#         with open(f"{report.split('.')[0]}__processed.tsv", "w") as out_f:
+#             out_f.write(f"{header}\n")
+#             shutil.copyfileobj(in_f, out_f)
 
 
-for sample in data_per_sample:
-    for data in data_per_sample[sample]:
-        # print("\t".join(data))
-
-        with open(path_to_tsv_file, "a") as report_file_handler:
-            report_file_handler.write("\t".join(data) + '\n')
