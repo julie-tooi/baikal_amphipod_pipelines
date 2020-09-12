@@ -30,11 +30,11 @@ def run_pipeline(path_to_workdir, sample, cmd):
         logging.info(f"Fail sample: {sample}")
 
 
-def analyze_assembly(path_to_workdir, contaminant_file, ref_database, threads):
+def analyze_assembly(path_to_workdir, contaminant_file, ref_database, threads, pattern):
     samples = glob(args.samples)
     logging.info(f"Found samples: {samples}")
     for sample in samples:
-        sample_name = path.basename(sample).split('_rnaspades')[0]
+        sample_name = path.basename(sample).split(pattern)[0]
         cmd = (
             "cwltool",
             "--cachedir", f"{sample_name}_cache",
@@ -48,11 +48,11 @@ def analyze_assembly(path_to_workdir, contaminant_file, ref_database, threads):
         run_pipeline(path_to_workdir, sample_name, cmd)
 
 
-def analyze_paired_reads(path_to_workdir, contaminant_file, ref_database, threads):
+def analyze_paired_reads(path_to_workdir, contaminant_file, ref_database, threads, pattern):
     fastq_files_paths = glob(args.samples)
     samples = defaultdict(list)
     for fastq_file_path in fastq_files_paths:
-        sample_name = path.basename(fastq_file_path).split('__')[0]
+        sample_name = path.basename(fastq_file_path).split(pattern)[0]
         if fastq_file_path not in samples[sample_name]:
             samples[sample_name].append(fastq_file_path)
     logging.info(f"Found {len(samples)} samples: {tuple(samples.keys())}")
@@ -83,24 +83,32 @@ def main(input_type, ref_database, threads, contaminant_file, path_to_workdir):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('samples', type=str, help='Path to directory with samples batch')
-    parser.add_argument('db', type=str, help='Path to ready-to-work mmseqs2 reference database')
-    parser.add_argument('contamination', type=str, help='Path to file with contamination data in fasta format')
+    parser.add_argument('-i', '--samples', type=str, help='Path to samples batch', required=True)
+    parser.add_argument('-db', '--database', type=str, help='Path to ready-to-work mmseqs2 reference database', required=True)
+    parser.add_argument('-c','--contamination', type=str, help='Path to file with contamination data in fasta format', required=True)
     parser.add_argument(
-        'input_type',
+        '-type','--input_type',
         type=int,
         help='Specify input type: '
              '1 - give only one file for analysis (assembly) '
              '2 - give two files for analysis (forward and reverse reads)',
-        choices=[1, 2]
+        choices=[1, 2],
+        required=True
     )
+    parser.add_argument(
+        '-p', '--pattern',
+        type=str,
+        help='Pattern that used to split sample name: '
+             'For example, file name is: "/path/to/file/sample_1_rnasades_assembly.fasta" '
+             'To get file name, we need split it by pattern "_rnaspades_"', required=True)
     parser.add_argument('-t', '--threads', type=int, default=3)
     args = parser.parse_args()
 
     main(
         input_type=args.input_type,
-        ref_database=args.db,
+        ref_database=args.database,
         threads=args.threads,
         contaminant_file=args.contamination,
+        pattern=args.pattern,
         path_to_workdir=getcwd()
     )
