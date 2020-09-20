@@ -73,12 +73,12 @@ def analyze_paired_reads(path_to_workdir, contaminant_file, ref_database, thread
         run_pipeline(path_to_workdir, sample, cmd)
 
 
-def main(input_type, ref_database, threads, contaminant_file, path_to_workdir):
+def main(input_type, ref_database, threads, contaminant_file, path_to_workdir, pattern):
     analyzers = {
         InputType.PAIRED_READS: analyze_paired_reads,
         InputType.ASSEMBLY: analyze_assembly,
     }
-    analyzers[input_type](path_to_workdir, contaminant_file, ref_database, threads)
+    analyzers[input_type](path_to_workdir, contaminant_file, ref_database, threads, pattern)
 
 
 if __name__ == '__main__':
@@ -95,14 +95,13 @@ if __name__ == '__main__':
         choices=[1, 2],
         required=True
     )
-    parser.add_argument(
-        '-p', '--pattern',
-        type=str,
+    parser.add_argument('-p', '--pattern', type=str,
         help='Pattern that used to split sample name: '
              'For example, file name is: "/path/to/file/sample_1_rnasades_assembly.fasta" '
              'To get file name, we need split it by pattern "_rnaspades_"', required=True)
     parser.add_argument('-t', '--threads', type=int, default=3)
     args = parser.parse_args()
+    print(args)
 
     main(
         input_type=args.input_type,
