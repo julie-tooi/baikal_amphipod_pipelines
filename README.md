@@ -29,9 +29,9 @@ The tasks:
 
 Pipeline is written in [CWL](https://www.commonwl.org/v1.1/). Every tool used has [docker](https://www.docker.com/) container.
 
-Scheme of steps:
+Scheme of steps in k-mer based pipelines (now data prefiltering is optional):
 
-<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/3d123278-128d-4a5a-a19d-1db7171e2a62/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20200912%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20200912T090804Z&X-Amz-Expires=86400&X-Amz-Signature=0b2f548a4eb8aaf09f0131ae485f69ca84d9b8ee1ce7704c4bb627772d60a86c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" width="400" />
+![Workflow](images/kmer_workflow.png)
 
 ## Requirements
 
@@ -51,7 +51,7 @@ For example, clone this repository, go to `bbduk` directory and build image:
 
 ```bash
 git clone https://github.com/julie-tooi/baikal_amphipod_pipelines.git 
-cd baikal_amphipod_pipelines/bbduk
+cd baikal_amphipod_pipelines/k-mer_based_pipelines/bbduk
 docker build -t bbduk:test .
 ```
 
@@ -113,7 +113,7 @@ For further analysis a part of the database (Swissprot) with marker protein COI 
 
 The PCA analysis of pipeline output data showed that the amphipods' living place is more important for microbiome composition than the species of amphipod.
 
-![PCA](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a1ebc06d-9be6-4e3b-a86c-ad1ffb218f44/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20200912%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20200912T091027Z&X-Amz-Expires=86400&X-Amz-Signature=89e05f62f4c560a5cf6f4faeecc7f6e6221bbef5e167bdef12631661f285521c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![PCA](images/PCA_kmer_coi.png)
 
 ## References
 
