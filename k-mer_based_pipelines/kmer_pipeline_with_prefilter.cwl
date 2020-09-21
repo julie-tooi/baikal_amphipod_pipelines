@@ -36,7 +36,7 @@ outputs:
 
 steps:
   processing_data_wo_assembly:
-    run: part_of_pipeline_wo_assembly.cwl
+    run: prefilter_and_taxonomy.cwl
     in:
       forward_reads: forward_reads
       reverse_reads: reverse_reads
@@ -46,7 +46,7 @@ steps:
     out: [reads_database_after_tax_analysis, stats_log_after_contamination_clearing]
 
   generate_report:
-    run: pipeline_generate_report.cwl
+    run: generate_report.cwl
     in:
       db_files: processing_data_wo_assembly/reads_database_after_tax_analysis
       ref_database: ref_database
