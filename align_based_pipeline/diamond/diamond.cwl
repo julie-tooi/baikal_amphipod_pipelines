@@ -44,7 +44,7 @@ inputs:
   max_target_seqs:
     type: int
     inputBinding:
-      prefix: '-k'
+      prefix: '--max-target-seqs'
 
 outputs:
   filtered_annotated_reads:
