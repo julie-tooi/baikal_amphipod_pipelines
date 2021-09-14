@@ -4,7 +4,7 @@ label: DIAMOND wrapper
 
 requirements:
   - class: DockerRequirement
-    dockerPull: 'buchfink/diamond:version2.0.9'
+    dockerPull: 'buchfink/diamond:version2.0.11'
   - class: ShellCommandRequirement
 
 baseCommand: ['diamond', 'blastx']
@@ -51,5 +51,3 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.annotated_assembly_file_name)
-
-
