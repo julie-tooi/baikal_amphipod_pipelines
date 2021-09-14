@@ -20,7 +20,7 @@ inputs:
     inputBinding:
       prefix: '-d'
 
-  annotated_reads_file_name:
+  annotated_assembly_file_name:
     type: string
     inputBinding:
       prefix: '-o'
@@ -47,9 +47,9 @@ inputs:
       prefix: '--max-target-seqs'
 
 outputs:
-  filtered_annotated_reads:
+  annotated_assembly:
     type: File
     outputBinding:
-      glob: $(inputs.annotated_reads_file_name)
+      glob: $(inputs.annotated_assembly_file_name)
 
 
