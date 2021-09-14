@@ -25,7 +25,7 @@ inputs:
     inputBinding:
       prefix: '-o'
 
-  analisys_sensitivity:
+  sensitive_analysis_mode:
     type: boolean
     inputBinding:
       prefix: '--sensitive'
