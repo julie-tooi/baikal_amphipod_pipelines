@@ -4,13 +4,13 @@ label: DIAMOND wrapper
 
 requirements:
   - class: DockerRequirement
-    dockerPull: 'buchfink/diamond:version0.9.34'
+    dockerPull: 'buchfink/diamond:version2.0.9'
   - class: ShellCommandRequirement
 
 baseCommand: ['diamond', 'blastx']
 
 inputs:
-  filtered_reads:
+  assembly:
     type: File
     inputBinding:
       prefix: '-q'
