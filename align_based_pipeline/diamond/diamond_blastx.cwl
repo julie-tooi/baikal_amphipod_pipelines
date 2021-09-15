@@ -4,10 +4,9 @@ label: DIAMOND wrapper
 
 requirements:
   - class: DockerRequirement
-    dockerPull: 'buchfink/diamond:version2.0.11'
-  - class: ShellCommandRequirement
+    dockerPull: 'buchfink/diamond:version2.0.9'
 
-baseCommand: ['diamond', 'blastx']
+baseCommand: [blastx']
 
 inputs:
   assembly:
@@ -27,6 +26,7 @@ inputs:
 
   sensitive_analysis_mode:
     type: boolean
+    default: true
     inputBinding:
       prefix: '--sensitive'
 
@@ -36,13 +36,15 @@ inputs:
       prefix: '--threads'
 
   output_format:
-    type: string
+    type: string[]
+    default: ['6', 'qseqid', 'sseqid', 'pident', 'length', 'mismatch', 'gapopen', 'qstart', 'qend', 'sstart', 'send', 'evalue', 'bitscore', 'staxids', 'sscinames', 'sskingdoms', 'skingdoms', 'sphylums', 'stitle', 'salltitles']
     inputBinding:
       prefix: '-f'
       shellQuote: false
 
   max_target_seqs:
     type: int
+    default: 1
     inputBinding:
       prefix: '--max-target-seqs'
 
